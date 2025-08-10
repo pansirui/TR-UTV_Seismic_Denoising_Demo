@@ -7,17 +7,20 @@ N = ndims(Y);  % N = 3
 S = size(Y);
 G = TR_initcoreten(S,r);  
 
+% solving the core tensors
 iter = 0;
 while iter < maxiter
       iter = iter+1;
       for n = 1:N
       Q = tenmat_sb(Z_neq(G,n),2);  
       Q=Q'; 
+	  % equation 30 in the paper
 	  G{n} = Gfold((alpha*tenmat_sb(Y,n)*Q'+2*tau*Gunfold(G{n},2))/((alpha*(Q*Q')...
             +2*tau*eye(size(Q,1),size(Q,1)))),size(G{n}),2);
       end
 end
 
+% reconstrcut the tensor from core tensors
 X = coreten2tr(G);
 
 end
