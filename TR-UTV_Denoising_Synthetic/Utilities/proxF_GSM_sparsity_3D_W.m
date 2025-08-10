@@ -1,16 +1,16 @@
 function [S] = proxF_GSM_sparsity_3D_W(y, mu1)
 
-    [m, n, p]     = size(y);  % »ñÈ¡ÊäÈë y µÄ³ß´ç
+    [m, n, p]     = size(y);  % è·å–è¾“å…¥ y çš„å°ºå¯¸
     
     W              =    20./abs(y);
      
     mu             =    mu1./(W.^2);  
     
     
-    theta0        = sqrt(sum(y.^2, 2) / n);  % ¼ÆËãÃ¿¸öÇĞÆ¬µÄtheta0£¬µÃµ½ m x 1 x p
-    theta0        = repmat(theta0, [1, n, 1]);  % ½« theta0 ¸´ÖÆµ½ËùÓĞÁĞÉÏ£¬µÃµ½ m x n x p
+    theta0        = sqrt(sum(y.^2, 2) / n);  % è®¡ç®—æ¯ä¸ªåˆ‡ç‰‡çš„theta0ï¼Œå¾—åˆ° m x 1 x p
+    theta0        = repmat(theta0, [1, n, 1]);  % å°† theta0 å¤åˆ¶åˆ°æ‰€æœ‰åˆ—ä¸Šï¼Œå¾—åˆ° m x n x p
 
-    alpha         = y ./ (theta0 + eps);  % ¶Ô theta0 ½øĞĞ¹ã²¥£¬±ÜÃâ³ıÒÔ0
+    alpha         = y ./ (theta0 + eps); 
     a             = alpha.^2;
     b             = -2 * alpha .* y;
     c             = 4 * mu;
@@ -37,6 +37,7 @@ function [S] = proxF_GSM_sparsity_3D_W(y, mu1)
 
     aa            = y ./ (theta + eps);
     thr           = 2 * sqrt(2) * mu ./ (theta.^2 + eps);
-    alpha         = soft(aa, thr);  % Ê¹ÓÃ soft º¯Êı½øĞĞÈíãĞÖµ´¦Àí
+    alpha         = soft(aa, thr);  % ä½¿ç”¨ soft å‡½æ•°è¿›è¡Œè½¯é˜ˆå€¼å¤„ç†
     S             = theta .* alpha;
 end
+
